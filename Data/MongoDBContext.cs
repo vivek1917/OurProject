@@ -24,6 +24,6 @@ namespace OurProject.Data
         public IMongoCollection<TeacherSubject> TeacherSubjects => _database.GetCollection<TeacherSubject>("TeacherSubjects");
         public IMongoCollection<Course> Courses => _database.GetCollection<Course>("Courses");
         public IMongoCollection<CourseSubject> CourseSubjects => _database.GetCollection<CourseSubject>("CourseSubjects");
-        public IMongoCollection<TestCase> TestCases => _database.GetCollection<TestCase>("TestCases");
+        //public IMongoCollection<AssignmentSubmissionService> TestCases => _database.GetCollection<AssignmentSubmissionService>("TestCases");
     }
 }

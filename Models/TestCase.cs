@@ -1,19 +1,50 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using OurProject.Models;
+using MongoDB.Driver;
 
-namespace OurProject.Models
+namespace OurProject.Services
 {
-    public class TestCase
+    public class AssignmentSubmissionService
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        private readonly IMongoCollection<AssignmentSubmission> _assignmentSubmissions;
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string AssignmentId { get; set; }
+        public AssignmentSubmissionService(IMongoDatabase database)
+        {
+            _assignmentSubmissions = database.GetCollection<AssignmentSubmission>("AssignmentSubmissions");
+        }
 
-        public string Input { get; set; }
-        public string ExpectedOutput { get; set; }
+        public async Task<List<AssignmentSubmission>> GetAllSubmissionsAsync()
+        {
+            return await _assignmentSubmissions.Find(submission => true).ToListAsync();
+        }
+
+        public async Task<AssignmentSubmission> GetSubmissionByIdAsync(string id)
+        {
+            return await _assignmentSubmissions.Find(submission => submission.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<AssignmentSubmission>> GetSubmissionsByAssignmentIdAsync(string assignmentId)
+        {
+            return await _assignmentSubmissions.Find(submission => submission.AssignmentId == assignmentId).ToListAsync();
+        }
+
+        public async Task<List<AssignmentSubmission>> GetSubmissionsByStudentIdAsync(string studentId)
+        {
+            return await _assignmentSubmissions.Find(submission => submission.StudentId == studentId).ToListAsync();
+        }
+
+        public async Task CreateSubmissionAsync(AssignmentSubmission submission)
+        {
+            await _assignmentSubmissions.InsertOneAsync(submission);
+        }
+
+        public async Task UpdateSubmissionAsync(string id, AssignmentSubmission updatedSubmission)
+        {
+            await _assignmentSubmissions.ReplaceOneAsync(submission => submission.Id == id, updatedSubmission);
+        }
+
+        public async Task DeleteSubmissionAsync(string id)
+        {
+            await _assignmentSubmissions.DeleteOneAsync(submission => submission.Id == id);
+        }
     }
-
 }

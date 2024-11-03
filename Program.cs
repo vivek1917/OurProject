@@ -82,6 +82,10 @@ builder.Services.AddSingleton(sp =>
     return client.GetDatabase(settings.DatabaseName);
 });
 builder.Services.AddSingleton<AuthenticationService>();
+builder.Services.AddSingleton<AssignmentService>();
+builder.Services.AddSingleton<AssignmentSubmissionService>();
+
+
 
 var app = builder.Build();
 
