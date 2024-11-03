@@ -18,8 +18,26 @@ namespace OurProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssignments()
         {
+            // Fetch assignments
             var assignments = await _assignmentService.GetAssignmentsAsync();
-            return Ok(assignments);
+
+            // Create a response object that includes the subject name for each assignment
+            var assignmentResponses = new List<object>();
+
+            foreach (var assignment in assignments)
+            {
+                // Fetch the subject name
+                var subjectName = await _assignmentService.GetSubjectNameByIdAsync(assignment.SubjectId);
+
+                // Create an object containing the assignment and subject name
+                assignmentResponses.Add(new
+                {
+                    assignment,
+                    SubjectName = subjectName
+                });
+            }
+
+            return Ok(assignmentResponses);
         }
 
         [HttpGet("{id}")]
@@ -30,7 +48,18 @@ namespace OurProject.Controllers
             {
                 return NotFound(new { message = "Assignment not found" });
             }
-            return Ok(assignment);
+
+            // Fetch the subject name
+            var subjectName = await _assignmentService.GetSubjectNameByIdAsync(assignment.SubjectId);
+
+            // Create a response object including the assignment and subject name
+            var response = new
+            {
+                assignment,
+                SubjectName = subjectName
+            };
+
+            return Ok(response);
         }
 
         [HttpPost]
