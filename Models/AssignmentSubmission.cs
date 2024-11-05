@@ -6,13 +6,13 @@ namespace OurProject.Models
     public class AssignmentSubmission
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        //[BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
+        //[BsonRepresentation(BsonType.ObjectId)]
         public string StudentId { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
+        //[BsonRepresentation(BsonType.ObjectId)]
         public string AssignmentId { get; set; }
 
         public string SubmittedCode { get; set; }
