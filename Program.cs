@@ -147,6 +147,7 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddSingleton<AuthenticationService>();
 builder.Services.AddSingleton<AssignmentService>();
 builder.Services.AddSingleton<AssignmentSubmissionService>();
+builder.Services.AddHostedService<AssignmentStatusUpdaterService>();
 
 var app = builder.Build();
 

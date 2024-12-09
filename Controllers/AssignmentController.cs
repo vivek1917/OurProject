@@ -18,18 +18,14 @@ namespace OurProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssignments()
         {
-            // Fetch assignments
             var assignments = await _assignmentService.GetAssignmentsAsync();
 
-            // Create a response object that includes the subject name for each assignment
             var assignmentResponses = new List<object>();
 
             foreach (var assignment in assignments)
             {
-                // Fetch the subject name
                 var subjectName = await _assignmentService.GetSubjectNameByIdAsync(assignment.SubjectId);
 
-                // Create an object containing the assignment and subject name
                 assignmentResponses.Add(new
                 {
                     assignment,
@@ -49,10 +45,8 @@ namespace OurProject.Controllers
                 return NotFound(new { message = "Assignment not found" });
             }
 
-            // Fetch the subject name
             var subjectName = await _assignmentService.GetSubjectNameByIdAsync(assignment.SubjectId);
 
-            // Create a response object including the assignment and subject name
             var response = new
             {
                 assignment,
@@ -60,6 +54,21 @@ namespace OurProject.Controllers
             };
 
             return Ok(response);
+        }
+
+        [HttpGet("status/{status}")]
+        public async Task<IActionResult> GetAssignmentsByStatus(string status)
+        {
+            status = status.ToLower();
+
+            if (string.IsNullOrEmpty(status) ||
+                (status != "ongoing" && status != "overdue" && status != "submitted"))
+            {
+                return BadRequest("Invalid status. Must be one of: ongoing, overdue, submitted.");
+            }
+
+            List<Assignment> assignments = await _assignmentService.GetAssignmentsByStatus(status);
+            return Ok(assignments);
         }
 
         [HttpPost]
@@ -78,7 +87,7 @@ namespace OurProject.Controllers
                 return NotFound(new { message = "Assignment not found" });
             }
 
-            updatedAssignment.Id = id; // Ensure the ID is set to match the URL parameter
+            updatedAssignment.Id = id;
             await _assignmentService.UpdateAssignmentAsync(id, updatedAssignment);
             return NoContent();
         }
