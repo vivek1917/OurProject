@@ -214,8 +214,6 @@ namespace OurProject.Services
 
                 await _submissions.InsertOneAsync(submission);
 
-                var update = Builders<Assignment>.Update.Set(a => a.Status, "Submitted");
-                await _assignments.UpdateOneAsync(a => a.Id == submission.AssignmentId, update);
 
                 return true;
             }

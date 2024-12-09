@@ -16,7 +16,7 @@ namespace OurProject.Models
         public string AssignmentId { get; set; }
 
         public string SubmittedCode { get; set; }
-        public string ExecutionImage { get; set; }
+        //public string ExecutionImage { get; set; }
         public DateTime SubmittedDate { get; set; }
     }
 

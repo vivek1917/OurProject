@@ -22,7 +22,7 @@ namespace OurProject.Models
 
         public DateTime CreatedDate { get; set; }
         public DateTime DueDate { get; set; }
-        public string Status { get; set; }  // "Ongoing", "Overdue", "Submitted", "Rated"
+        //public string Status { get; set; }  // "Ongoing", "Overdue", "Submitted", "Rated"
     }
     
 }

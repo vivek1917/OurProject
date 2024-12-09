@@ -260,12 +260,37 @@ namespace OurProject.Controllers
             }
         }
 
+        //[HttpPost]
+        //public async Task<ActionResult> CreateSubmission([FromBody] AssignmentSubmission submission)
+        //{
+        //    try
+        //    {
+        //        submission.SubmittedDate = DateTime.UtcNow;
+        //        bool isSuccess = await _submissionService.SubmitAssignmentAsync(submission);
+
+        //        if (!isSuccess)
+        //        {
+        //            return Conflict("Duplicate submission.");
+        //        }
+
+        //        return CreatedAtAction(nameof(GetSubmissionById), new { id = submission.Id }, submission);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Error in CreateSubmission: " + ex.Message);
+        //        return StatusCode(500, "An error occurred while creating the submission.");
+        //    }
+        //}
+
         [HttpPost]
         public async Task<ActionResult> CreateSubmission([FromBody] AssignmentSubmission submission)
         {
             try
             {
+                // Set the submission date
                 submission.SubmittedDate = DateTime.UtcNow;
+
+                // Call your service to submit the assignment
                 bool isSuccess = await _submissionService.SubmitAssignmentAsync(submission);
 
                 if (!isSuccess)
@@ -273,6 +298,7 @@ namespace OurProject.Controllers
                     return Conflict("Duplicate submission.");
                 }
 
+                // Return success response
                 return CreatedAtAction(nameof(GetSubmissionById), new { id = submission.Id }, submission);
             }
             catch (Exception ex)
@@ -281,6 +307,7 @@ namespace OurProject.Controllers
                 return StatusCode(500, "An error occurred while creating the submission.");
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateSubmission(string id, [FromBody] AssignmentSubmission updatedSubmission)
