@@ -59,7 +59,6 @@ namespace OurProject.Controllers
             {
                 var submissionExists = await _submissionService.CheckIfSubmittedAsync(studentId, assignmentId);
 
-                // Return 'true' if a submission exists, otherwise 'false'
                 return Ok(submissionExists);
             }
             catch (Exception ex)

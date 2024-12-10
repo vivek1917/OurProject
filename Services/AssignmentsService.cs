@@ -10,8 +10,8 @@ namespace OurProject.Services
 
         public AssignmentService(IMongoDatabase database)
         {
-            _assignments = database.GetCollection<Assignment>("Assignments"); // Replace "Assignments" with your collection name if different
-            _subjects = database.GetCollection<Subject>("Subjects"); // Ensure this matches your subject collection name
+            _assignments = database.GetCollection<Assignment>("Assignments");
+            _subjects = database.GetCollection<Subject>("Subjects");
         }
 
         public async Task<List<Assignment>> GetAssignmentsAsync() =>
@@ -19,7 +19,6 @@ namespace OurProject.Services
 
         public async Task<List<Assignment>> GetAssignmentsByTeacherIdAsync(string teacherId)
         {
-            // Filter the assignments collection by the logged-in teacher's ID
             return await _assignments.Find(a => a.TeacherId == teacherId).ToListAsync();
         }
 
@@ -29,7 +28,7 @@ namespace OurProject.Services
         public async Task<string?> GetSubjectNameByIdAsync(string subjectId)
         {
             var subject = await _subjects.Find(s => s.Id == subjectId).FirstOrDefaultAsync();
-            return subject?.Name; // Return the subject name or null if not found
+            return subject?.Name;
         }
 
         public async Task<List<Subject>> GetSubjectsByIdsAsync(List<string> subjectIds)
