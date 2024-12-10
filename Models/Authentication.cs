@@ -11,10 +11,10 @@ namespace OurProject.Models
 
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }  // "Teacher" or "Student"
+        public string Role { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string UserId { get; set; }  // References either Teacher or Student
+        public string UserId { get; set; }
     }
 
 }

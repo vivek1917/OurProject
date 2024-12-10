@@ -12,8 +12,8 @@ namespace OurProject.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string AssignmentSubmissionId { get; set; }
 
-        public string Marks { get; set; }  // Could be grade or numeric
-        public string ResultStatus { get; set; }  // "Success", "Partial Success", "Failure"
+        public string Marks { get; set; }
+        public string ResultStatus { get; set; } 
     }
 
 }
