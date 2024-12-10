@@ -52,6 +52,23 @@ namespace OurProject.Controllers
             }
         }
 
+        [HttpGet("check-submission/{studentId}/{assignmentId}")]
+        public async Task<ActionResult<bool>> CheckSubmissionStatus(string studentId, string assignmentId)
+        {
+            try
+            {
+                var submissionExists = await _submissionService.CheckIfSubmittedAsync(studentId, assignmentId);
+
+                // Return 'true' if a submission exists, otherwise 'false'
+                return Ok(submissionExists);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in CheckSubmissionStatus: " + ex.Message);
+                return StatusCode(500, "An error occurred while checking the submission status.");
+            }
+        }
+
         [HttpGet("assignment/{assignmentId}")]
         public async Task<ActionResult<List<AssignmentSubmission>>> GetSubmissionsByAssignmentId(string assignmentId)
         {
